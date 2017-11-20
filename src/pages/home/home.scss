@@ -1,0 +1,76 @@
+page-home {
+    .item-cover {
+        left: 0;
+        top: 0;
+        position: absolute;
+        width: 15%;
+        height: 100%;
+        background: transparent;
+        cursor: pointer;
+    }
+    .row_border {
+        border: 1px solid #e4e4e4;
+        border-top: none;
+        border-right: none;
+        border-left: none;
+        width: 100%;
+    }
+    .home_header {
+        background-color: #3b576d;
+        height: 9%;
+    }
+    .home_headerBtn {
+        background-color: #21a888;
+        color: white;
+        text-align: center;
+        text-transform: initial;
+        margin-left: auto;
+        margin-right: 5%;
+        border-radius: 25px;
+        width: 25%;
+    }
+    .header-ios {
+        margin-top: 5% !important;
+    }
+    .content-ios {
+        margin-top: 5%;
+    }
+    .home_image {
+        width: 100%;
+        height: 100%;
+    }
+    .slide-zoom {
+        height: 100%;
+        width: 100%;
+    }
+    .swiper-slide {
+        width: 100% !important;
+    }
+    .scroll-content {
+        padding: 0px !important;
+        margin-top: 0px !important;
+    }
+    .swiper-pagination-fraction,
+    .swiper-pagination-custom,
+    .swiper-container-horizontal>.swiper-pagination-bullets {
+        bottom: 5% !important;
+    }
+    .home_bodyBtn {
+        // position: absolute;
+        // bottom: 15%;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 25px;
+        background-color: #21a888;
+        width: 65%;
+        z-index: 2;
+    }
+    .home_content {
+        position: relative;
+    }
+    .home_body_btn {
+        position: absolute;
+        top: 80%;
+        width: 100%;
+    }
+}

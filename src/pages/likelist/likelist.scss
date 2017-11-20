@@ -1,0 +1,168 @@
+page-likelist {
+    .content_bg {
+        background-color: #235890;
+    }
+    .label_welcome {
+        text-align: center;
+        color: pink;
+        font-size: 30px;
+    }
+    .label_content {
+        text-align: center;
+        color: blue;
+        font-size: 20px;
+    }
+    .name_address {
+        color: #00a99c;
+        font-family: Lucida Sans;
+        font-style: italic;
+        font-weight: bold;
+        font-size: 1rem;
+    }
+    .detail_nameaddress {
+        font-family: Tahoma;
+        font-weight: bold;
+        font-style: italic;
+        color: #988777;
+        border: 1px dashed #9a8572;
+        border-left: none;
+        border-right: none;
+        margin-top: 5%;
+        height: 7%;
+        padding-top: 1%;
+        padding-bottom: 3%;
+        font-size: 1rem;
+        width: 100%;
+        height: 29px;
+    }
+    .normalstyle {
+        font-size: 1rem;
+        width: 100%;
+        color: black;
+        font-weight: initial;
+        font-style: initial;
+    }
+    .editTextstyle {
+        font-family: Tahoma;
+        font-weight: bold;
+        font-style: italic;
+        color: #998675;
+        font-size: 1rem;
+        width: 10%;
+        float: left;
+        padding-top: 4%;
+    }
+    .checkbox_set {
+        transform: scale(2, 2);
+        margin-top: 5%;
+        font-size: 1rem;
+    }
+    .bar-button-default-md {
+        color: white;
+    }
+    .toolbar-background-md {
+        background: #808080;
+    }
+    .toolbar-title-md {
+        color: white;
+    }
+    .segment-md .segment-button.segment-activated {
+        border-color: white;
+    }
+    .segment-md .segment-button {
+        color: white;
+    }
+    ion-col {
+        width: 100%;
+        height: 22px;
+    }
+    .detail_other {
+        font-family: Tahoma;
+        font-weight: bold;
+        font-style: italic;
+        color: #00a99c;
+        border: 1px dashed #998677;
+        border-left: none;
+        border-right: none;
+        margin-top: 5%;
+        height: 7%;
+        padding-top: 1%;
+        padding-bottom: 3%;
+        font-size: 1rem;
+        width: 100%;
+        height: 29px;
+    }
+    .checkbox_productname {
+        margin-top: 6%;
+        margin-left: 5%;
+        font-size: 1rem;
+        text-align: left;
+    }
+    .addnewCard {
+        font-weight: bold;
+        font-family: Franklin Gothic Medium;
+        font-size: 1rem;
+        text-align: right;
+        float: right;
+        width: 100%;
+        margin-top: 9%;
+    }
+    .addbuttonSetting {
+        width: 120%;
+        background-color: #01a892;
+        color: white;
+        text-align: center;
+        font-size: 1rem;
+        position: relative;
+        margin-left: -10%;
+        bottom: -10px;
+        margin-left: -5%;
+    }
+    .product_Info_name {
+        margin-top: 4%;
+        margin-left: 5%;
+        font-size: 1rem;
+    }
+    .imgclass {
+        width: 100%;
+        height: 100%;
+    }
+    .img_thumbnail {
+        width: 50%;
+        margin-top: auto;
+    }
+    .descrip_Card {
+        font-size: 1rem;
+        border: 1px solid #b3b3b3;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+    }
+    .add_new_card {
+        width: 120%;
+    }
+    .new_card_option {
+        width: 80%;
+    }
+    .merchant_explain {
+        font-family: Microsoft JhengHei;
+        text-align: center;
+        font-weight: bold;
+        color: blueviolet;
+    }
+    .input_voucher {
+        text-transform: uppercase;
+    }
+    .success_btn {
+        background-color: #21a888;
+        text-transform: initial;
+        width: 60%;
+        margin: auto;
+        border-radius: 25px;
+    }
+    .content_title {
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+    }
+}

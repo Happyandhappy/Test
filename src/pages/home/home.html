@@ -1,0 +1,25 @@
+<ion-header class="home_header">
+
+    <ion-row>
+        <button ion-button class="home_headerBtn" (click)="goto_login()">
+            Login
+        </button>
+    </ion-row>
+
+</ion-header>
+
+<ion-content padding class="home_content">
+
+    <ion-slides pager>
+        <ion-slide *ngFor="let slide of slides">
+            <img [src]="slide.image" class="home_image" />
+        </ion-slide>
+    </ion-slides>
+
+    <ion-row class="home_body_btn">
+        <button ion-button class="home_bodyBtn" (click)="goto_reg()">
+            Sign up
+        </button>
+    </ion-row>
+
+</ion-content>

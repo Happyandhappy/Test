@@ -1,0 +1,72 @@
+<!--
+  Generated template for the ForgotPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+<ion-header style="background-color: #33455b; height: 5%;">
+</ion-header>
+<ion-content padding>
+    <ion-row>
+        <button ion-button class="success_btn" (click)="likelist()" style="width:100%">Go to Like List --></button>
+    </ion-row>
+
+    <ion-row style="margin-top:50px;">
+        <ion-label class="content_title">
+            Shopping List
+        </ion-label>
+    </ion-row>
+    <ion-row style="width:100%;">
+
+        <div class="img_thumbnail" *ngFor="let url of imgUrl; let i=index">
+            <div class="imgclass">
+                <img src="{{url}}" style="padding-left:5%;" />
+            </div>
+            <div class="merchant_explain" style="padding-left:5%;">
+                <div>{{i}} is Good.</div>
+                <button ion-button class='success_btn' (click)="add(i, $event.target)">Like</button>
+            </div>
+        </div>
+
+        <div class="img_thumbnail" *ngFor="let unit of todos; let i=index">
+            <div class="imgclass">
+                <img src="{{unit.image}}" style="padding-left:5%;" />
+            </div>
+            <div class="merchant_explain" style="padding-left:5%;">
+                <div>{{i}} is Good.</div>
+            </div>
+        </div>
+        <button ion-button class="success_btn" (click)="adddata()">Store Image data to sqlite</button>
+        <!-- <div class="img_thumbnail">
+            <div class="imgclass">
+                <img src="assets/img/2.jpg" style="padding-left:5%;" />
+            </div>
+            <div class="merchant_explain" style="padding-left:5%;">Bread</div>
+        </div>
+
+        <div class="img_thumbnail">
+            <div class="imgclass">
+                <img src="assets/img/3.jpg" style="padding-left:5%;" />
+            </div>
+            <div class="merchant_explain" style="padding-left:5%;">Meet</div>
+        </div>
+
+        <div class="img_thumbnail">
+            <div class="imgclass"><img src="assets/img/5.jpg" style="padding-left:5%;" />
+            </div>
+            <div class="merchant_explain" style="padding-left:5%;">Wine</div>
+        </div>
+
+        <div class="img_thumbnail">
+            <div class="imgclass"><img src="assets/img/6.jpg" style="padding-left:5%;" />
+            </div>
+            <div class="merchant_explain" style="padding-left:5%;">Wodka</div>
+        </div> -->
+    </ion-row>
+    <br/><br/>
+    <ion-row>
+        <button ion-button class="success_btn" (click)="logout()">Logout</button>
+    </ion-row>
+
+</ion-content>

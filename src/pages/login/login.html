@@ -1,0 +1,65 @@
+<!--
+  Generated template for the LoginPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+
+<ion-content padding style="background-color:#3b566b;">
+
+    <ion-row style="width:100%; margin-top:30%;">
+        <img src="assets/img/logo.png" class="logo_img" />
+    </ion-row>
+
+    <ion-row style="margin-top: 15%;">
+        <ion-row>
+            <ion-label fix class="warning_text" *ngIf="userData.email == '' && warn_email">
+                EMAIL CANNOT BT EMPTY
+            </ion-label>
+
+            <ion-label fix class="success_text" *ngIf="userData.email != '' && warn_email">
+                WHAT IS YOUR EMAIL?
+            </ion-label>
+        </ion-row>
+        <ion-row>
+            <ion-input [ngClass]="(warn_email) ? 'row_selected' : 'row_border'" type="text" placeholder="What's your email?" [(ngModel)]="userData.email" (ionChange)="set_email()"></ion-input>
+        </ion-row>
+    </ion-row>
+
+    <ion-row>
+        <ion-row>
+            <ion-label fix class="success_text" *ngIf="userData.password != '' && warn_password && !check_pass">
+                ENTER YOUR PASSWORD
+            </ion-label>
+            <!-- <ion-label fix class="warning_text" *ngIf="userData.password != '' && warn_password && check_pass">
+                PASSWORD MUST BE 6 LETTERS
+            </ion-label> -->
+        </ion-row>
+
+        <ion-row>
+            <ion-input [ngClass]="{'row_border': !warn_password, 'row_selected': (warn_password && !check_pass), 'row_wrong': (userData.password != '' && warn_password && check_pass)}" type="{{text_mode}}" placeholder="Enter your password" [(ngModel)]="userData.password"
+                (ionChange)="passChange()" (click)="set_pass()"></ion-input>
+        </ion-row>
+
+        <ion-row>
+            <span color="secondary" class="show_text" (click)="set_password()">{{pass_val}}</span>
+            <span color="secondary" class="forgot_text" (click)="click_forgot()">Forgot?</span>
+        </ion-row>
+
+    </ion-row>
+
+    <ion-row style="margin-top: 30%;">
+        <ion-row>
+            <button ion-button class="signup_btn" outline (click)="login()">Login</button>
+        </ion-row>
+        <ion-row style="margin-top: 5%;">
+            <span class="bottom_des1">
+                New to Neat?
+                <span class="bottom_des2" (click)="goto_signup()">
+                    Sign up here
+                </span>
+            </span>
+        </ion-row>
+    </ion-row>
+</ion-content>

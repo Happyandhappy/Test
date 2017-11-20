@@ -1,0 +1,92 @@
+<!--
+  Generated template for the ForgotPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+<ion-header style="background-color: #33455b; height: 5%;">
+    <ion-row class="head_row">
+        <ion-icon name="ios-arrow-back" class="signup_head_icon" (click)="goback()"></ion-icon>
+        <span class="signup_head_title">Forgot Password</span>
+    </ion-row>
+</ion-header>
+
+
+<ion-content padding style="background-color:#3b566b;" *ngIf="forgot_part">
+
+    <ion-row style="margin-top: 15%;">
+        <span class="confirm_title">
+            Please input your email address.You will then receive an email confirmation code.
+        </span>
+    </ion-row>
+
+    <ion-row style="margin-top: 5%;">
+        <ion-row>
+            <ion-label fix class="warning_text" *ngIf="userData.email == '' && warn_email">
+                EMAIL CANNOT BT EMPTY
+            </ion-label>
+
+            <ion-label fix class="success_text" *ngIf="userData.email != '' && warn_email">
+                WHAT IS YOUR EMAIL?
+            </ion-label>
+        </ion-row>
+        <ion-row>
+            <ion-input [ngClass]="(warn_email) ? 'row_selected' : 'row_border'" type="text" placeholder="What's your email?" [(ngModel)]="userData.email"
+                (ionChange)="set_email()"></ion-input>
+        </ion-row>
+    </ion-row>
+
+    <ion-row style="margin-top: 30%;">
+        <ion-row>
+            <button ion-button class="signup_btn" (click)="goto_continue()">Continue</button>
+        </ion-row>
+    </ion-row>
+
+</ion-content>
+
+<ion-content padding style="background-color:#3b566b;" *ngIf="confirm_part">
+    <ion-row style="margin-top: 15%;">
+        <span class="confirm_title">
+            Please enter the confirmation code you have received via e-mail:{{userData.email}}
+        </span>
+    </ion-row>
+
+    <ion-row style="margin-top: 5%;">
+        <ion-input [(ngModel)] = "userData.confirm_code" [ngClass]="(warn_email) ? 'row_selected' : 'row_border'" type="text" placeholder="Confirmation Code" (click)="set_confirm()"></ion-input>
+    </ion-row>
+
+
+    <ion-row style="margin-top: 30%;">
+        <ion-row>
+            <button ion-button class="signup_btn" (click)="goto_confirm()">Confirm</button>
+        </ion-row>
+    </ion-row>
+</ion-content>
+
+<ion-content padding style="background-color:#3b566b;" *ngIf="create_pass">
+    <ion-row style="margin-top: 15%;">
+        <span class="confirm_title">
+            Create New Password
+        </span>
+    </ion-row>
+
+    <ion-row style="margin-top: 5%;">
+        <ion-row>
+            <ion-label fix class="success_text" *ngIf="userData.password != '' && warn_password && !check_pass">
+                CREATE A PASSWORD (6 LETTERS)
+            </ion-label>
+            <ion-label fix class="warning_text" *ngIf="userData.password != '' && warn_password && check_pass">
+                PASSWORD MUST BE 6 LETTERS
+            </ion-label>
+        </ion-row>
+
+        <ion-input [ngClass]="{'row_border': !warn_password, 'row_selected': (warn_password && !check_pass), 'row_wrong': (userData.password != '' && warn_password && check_pass)}"
+            type="password" placeholder="Create a password (6 letters)" [(ngModel)] = "userData.new_password" (ionChange)="passChange()"
+            (click)="set_pass()"></ion-input>
+    </ion-row>
+
+    <ion-row style="margin-top: 30%;">
+        <button ion-button class="signup_btn" (click)="goto_login()">Create</button>
+    </ion-row>
+</ion-content>
