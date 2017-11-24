@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
-import {HomePage} from '../home/home';
-import { Toast } from '@ionic-native/toast';
-import {SQLite, SQLiteObject} from '@ionic-native/sqlite';
 import {Sqlite} from '../../providers/sqlite/sqlite';
 import { Platform } from 'ionic-angular';
 
@@ -25,7 +22,6 @@ export class LikelistPage {
     public navCtrl: NavController, 
     public navParams: NavParams, 
     public loadingCtrl: LoadingController,
-    private toast: Toast,
     private sqliteService:Sqlite,
       protected platform:Platform) { //For SQLite
   

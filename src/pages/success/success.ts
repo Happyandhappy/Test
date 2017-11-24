@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
@@ -8,7 +7,6 @@ import { LikelistPage } from '../likelist/likelist';
 import { Sqlite } from '../../providers/sqlite/sqlite';
 import { Storage } from '@ionic/storage';
 import { Platform, ToastController } from 'ionic-angular';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Network } from '@ionic-native/network';
 /**
  * Generated class for the ForgotPage page.
