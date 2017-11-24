@@ -3,14 +3,12 @@ import 'rxjs/add/operator/map';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { PeopleproviderProvider } from '../../providers/peopleprovider/peopleprovider';
-import {HomePage} from '../home/home';
-import { Toast } from '@ionic-native/toast';
-import {LikelistPage} from '../likelist/likelist';
-import {Sqlite} from '../../providers/sqlite/sqlite';
-import {Storage} from '@ionic/storage';
-import {Platform} from 'ionic-angular';
-import {DomSanitizer} from '@angular/platform-browser';
-import { Observable } from 'rxjs/Observable';
+import { HomePage } from '../home/home';
+import { LikelistPage } from '../likelist/likelist';
+import { Sqlite } from '../../providers/sqlite/sqlite';
+import { Storage } from '@ionic/storage';
+import { Platform, ToastController } from 'ionic-angular';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Network } from '@ionic-native/network';
 /**
  * Generated class for the ForgotPage page.
@@ -25,106 +23,194 @@ import { Network } from '@ionic-native/network';
   templateUrl: 'success.html',
 })
 export class SuccessPage {
-  imgUrl:any=[];
-  public todos:any = [];
-  data:any
-  isConnected : boolean;
+  imgUrl: any[];
+  public send_data: any[];
+  public todos: any = [];
+  data: any
+  isConnected: boolean;
+  public email: any;
+  userData = { "email": "", "status": "", "goodid": null };
+
+
   constructor(
-    public navCtrl: NavController, 
-    public navParams: NavParams, 
+    public navCtrl: NavController,
+    public navParams: NavParams,
     public loadingCtrl: LoadingController,
-    private toast: Toast,
-    private storage:Storage,
-    protected platform : Platform,
+    private storage: Storage,
+    protected platform: Platform,
     private sqliteService: Sqlite,
+    public toastCtrl: ToastController,
     public peopleprovid: PeopleproviderProvider,
-    private network: Network) { 
-      //For SQLite
+    private network: Network) {
 
-      this.imgUrl=[
-        "assets/img/1.jpeg",
-        "assets/img/2.jpg",
-        "assets/img/3.jpg",
-        "assets/img/5.jpg",
-        "assets/img/6.jpg",
-        "assets/img/gif.gif",
-      ];
-      
-      this.network.onDisconnect().subscribe(() => {
-                  console.log('network was disconnected :-(');
-                  this.isConnected=false;
-      });
+    this.send_data = new Array();
+    this.isConnected = true;
+    // this.network.onDisconnect().subscribe(() => {
+    //   let toast = this.toastCtrl.create({ message: "Network Disonnected", duration: 2000 });
+    //   toast.present();
+    //   this.isConnected = false;
+    // });
 
-      this.network.onConnect().subscribe(() => {
-        this.isConnected=true;
-        this.sendpreparedData();
-        console.log('network connected!');
-        setTimeout(() => {
-          if (this.network.type === 'wifi') {
-            console.log('we got a wifi connection, woohoo!');
-          }
-        }, 3000);
-      });
+    // this.network.onConnect().subscribe(() => {
+    //   this.isConnected = true;
+    //   let toast = this.toastCtrl.create({ message: "Network Connected", duration: 2000 });
+    //   toast.present();
+    // });
 
-      this.platform.ready().then(() => {
-        this.sqliteService.getRows().then(s=>{
-              this.todos=this.sqliteService.arr;
-        });
+    this.platform.ready().then(() => {
+      this.sqliteService.getRows().then(s => {
+        this.todos = this.sqliteService.arr;
       });
+    });
   }
 
   //Logout
-  logout(){
-     let loading = this.loadingCtrl.create({
-        content:"Please Wait..."
+  logout() {
+    let loading = this.loadingCtrl.create({
+      content: "Please Wait..."
+    });
+    loading.present();
+    this.storage.set('token', ''); //delete token
+    this.navCtrl.setRoot(HomePage); //redirect homepage
+    loading.dismiss();
+  }
+
+  ionViewDidLoad() {
+    // let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
+    //   console.log('network was disconnected :-(');
+    //   let toast = this.toastCtrl.create({ message: "Network Disonnected", duration: 2000 });
+    //   toast.present();
+    // });
+    // disconnectSubscription.unsubscribe();
+
+    // let connectSubscription = this.network.onConnect().subscribe(() => {
+    //   let toast = this.toastCtrl.create({ message: "Network Disonnected", duration: 2000 });
+    //   toast.present();
+    // });
+    // connectSubscription.unsubscribe();
+
+    this.storage.get('token').then((value) => {
+       this.userData.email = value; 
+       //Receive data from server
+       this.getGoodData();
+       this.checkConnection();
+    },
+    (err) => { console.log(err); });
+  }
+
+  checkConnection(){
+     this.userData.status = "checkconnect";
+    //  this.send_data.push(this.userData);
+     this.peopleprovid.postData(new Array(this.userData)).then((result)=>{
+        console.log("Successfully connected to server");
+        if (!this.isConnected) {
+          this.sendpreparedData(this.todos.length);
+          console.log("Connected Server");
+
+          let toast = this.toastCtrl.create({ message: "Connected Server", duration: 2000 });
+          toast.present();
+
+          this.isConnected = true;
+        }      
+         setTimeout(() => { this.checkConnection(); }, 10000);
+     },(err)=>{
+        console.log("Disconnected Server");
+        if (this.isConnected){
+            this.isConnected = false;
+
+            let toast = this.toastCtrl.create({ message: "Disconnected Server", duration: 2000 });
+            toast.present();
+        }
+        setTimeout(() => { this.checkConnection(); }, 10000);
+     }); 
+  }
+
+  getGoodData() {
+    this.email = this.userData.email;
+    this.userData.status = "getgoods";
+    this.send_data.push(this.userData);
+
+    this.peopleprovid.getImageData(this.send_data).then((result) => {
+      this.imgUrl = Object(result).goodsdata;
+      console.log("Successfully get goods Data from server");
+      // if (!this.isConnected) {
+      //   this.sendpreparedData(this.todos.length);
+      //   console.log("Connected Server");
+      //   this.isConnected = true;
+      // }
+      // setTimeout(() => { this.getGoodData(); }, 10000);
+    }, (err) => {
+      let toast = this.toastCtrl.create({ message: "No Network", duration: 2000 });
+      toast.present();
+      // if (this.isConnected) console.log("Disconnected Server");
+      // this.isConnected = false;
+      // setTimeout(() => { this.getGoodData(); }, 10000);
+    });
+  }
+
+  likelist() {
+    this.navCtrl.push(LikelistPage);
+  }
+
+  //When clicked Like button, store image and description to sqlite and send to server if connected
+  add(i, element) {
+    //Store liked image and description
+    this
+      .sqliteService
+      .addItem(i, this.imgUrl[i].img_url, this.imgUrl[i].description)
+      .then(s => {
+        this.todos = this.sqliteService.arr;
       });
-      loading.present();
-      this.storage.set('token',''); //delete token
-      this.navCtrl.setRoot(HomePage); //redirect homepage
+    //send liked data to server
+    this.sendDatatoServer(i)
+  }
+
+  //send data to server
+  sendDatatoServer(goodid) {
+    let loading = this.loadingCtrl.create({
+      content: "Please Wait..."
+    });
+    loading.present();
+
+    if (this.send_data.length > 0) this.send_data.pop();
+
+    this.userData.email = this.email;
+    this.userData.status = "addlikedata";
+    this.userData.goodid = goodid;
+    this.send_data.push(this.userData);
+
+    this.peopleprovid.sendImageData(this.send_data).then((result) => {
+      if (Object(result).status == "success") {
+        loading.dismiss();
+        if (Object(result).detail == "delete") {
+          let toast = this.toastCtrl.create({ message: "Successfuly Deleted", duration: 2000 });
+          toast.present();
+        } else {
+          let toast = this.toastCtrl.create({ message: "Successfuly Added", duration: 2000 });
+          toast.present();
+        }
+      }
+      else {
+        loading.dismiss();
+        let toast = this.toastCtrl.create({ message: "Server Error", duration: 2000 });
+        toast.present();
+      }
+    }, (err) => {
+      let toast = this.toastCtrl.create({ message: "No Network", duration: 2000 });
+      toast.present();
       loading.dismiss();
+    });
   }
 
-likelist(){
-  this.navCtrl.push(LikelistPage);
-}
-
-//When clicked Like button, store image and description to sqlite and send to server if connected
-add(i, element) {
-  //Store liked image and description
-         this
-            .sqliteService
-            .addItem(this.imgUrl[i], i + " is OK.")
-            .then(s => {
-              this.todos = this.sqliteService.arr;
-            });
-  //send liked data to server
-  // var myData = JSON.stringify({username: this.data.username});
-        let item= JSON.stringify({image : this.imgUrl[i], description:i + " is OK."});
-         this.peopleprovid.sendImageData(item)
-                          .then(s=>{
-                              console.log("successfully sent to server");
-                          })
-            if (element.textContent=="Like") element.textContent = "Unlike";
-            else element.textContent = "Like";
-  }
-//When the network is online, send all data from sqlite
-sendpreparedData(){
-    if (this.todos.length > 0) {
-        for (var i = 0; i < this.todos.length; i++) {
-             let item= JSON.stringify({image : this.todos(i).image, description:this.todos(i).description});
-             this.peopleprovid.sendImageData(item)
-                             .then(s=>{
-                              console.log("successfully sent to server");
-                             });
-         }
+  //When the network is online, send all data from sqlite
+  sendpreparedData(count) {
+    if (count > 0) {
+      setTimeout(() => {
+        this.sendDatatoServer(this.todos[count - 1].imgid);
+        count--;
+        this.sendpreparedData(count);
+      }, 1500);
     }
-}
-
-  adddata(){
-     this.sqliteService.addItem(this.data,"")
-     .then(s=>{
-       this.todos=this.sqliteService.arr;
-     });
   }
 
   //Deleting function
@@ -137,15 +223,5 @@ sendpreparedData(){
       });
   }
 
-  //updating function
-  update(id, todo) {
-    var prompt = window.prompt('Update', todo);
-    this
-      .sqliteService
-      .update(id, prompt)
-      .then(s => {
-        this.todos = this.sqliteService.arr;
-      });
-  }
-
+  // this.navCtrl.remove;
 }

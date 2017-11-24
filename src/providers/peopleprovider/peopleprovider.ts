@@ -8,8 +8,8 @@ import 'rxjs/add/operator/map';
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
   for more info on providers and Angular DI.
 */
-let apiurl:string = "https://www.majorcompare.com/apiserver/";
-// let apiurl:string = "http://localhost/major/apiserver/";
+// let apiurl:string = "https://www.majorcompare.com/apiserver/";
+let apiurl:string = "http://192.168.2.138/apiserver/";
 
 let apiurl_auth = "https://api.e50.sevencorners.com/token";
 let apiurl_getimage = "https://api.e50.sevencorners.com/images";
@@ -28,7 +28,7 @@ export class PeopleproviderProvider {
     return new Promise((resolve, reject) => {       
 
       this.http.post(apiurl, credentials).subscribe(res => {
-        // console.log(res);
+        console.log("response:"+res);
         resolve(res.json());
       }, (err) => {
         reject(err);
@@ -37,26 +37,25 @@ export class PeopleproviderProvider {
     });
   }
   
-  getImageData(){
+  getImageData(credentials){
     return new Promise((resolve, reject)=>{
-      this.http.get(apiurl_getimage).subscribe(res=>{
+      this.http.post(apiurl, credentials).subscribe(res=>{
         resolve(res.json());
-      }, err =>{
+      }, (err) =>{
         reject(err);
-      })
+      });
     });
   }
 
-  sendImageData(data){
+  sendImageData(credentials){
     return new Promise((resolve,reject)=>{
-      this.http.post(apiurl_senddata,data).subscribe(
+      this.http.post(apiurl,credentials).subscribe(
         res=>{
-          resolve(true);
+          resolve(res.json());
         },
-        err=>{
-          resolve(false);
-        }
-      )
+        (err)=>{
+          resolve(err);
+        });
     });
   }
   // postData_Authontication(credentials) {

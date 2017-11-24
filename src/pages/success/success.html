@@ -21,23 +21,15 @@
 
         <div class="img_thumbnail" *ngFor="let url of imgUrl; let i=index">
             <div class="imgclass">
-                <img src="{{url}}" style="padding-left:5%;" />
+                <img src="{{url.img_url}}" style="padding-left:5%;" />
             </div>
             <div class="merchant_explain" style="padding-left:5%;">
-                <div>{{i}} is Good.</div>
+                <div>{{url.description}}</div>
+                <br/>
                 <button ion-button class='success_btn' (click)="add(i, $event.target)">Like</button>
             </div>
         </div>
 
-        <div class="img_thumbnail" *ngFor="let unit of todos; let i=index">
-            <div class="imgclass">
-                <img src="{{unit.image}}" style="padding-left:5%;" />
-            </div>
-            <div class="merchant_explain" style="padding-left:5%;">
-                <div>{{i}} is Good.</div>
-            </div>
-        </div>
-        <button ion-button class="success_btn" (click)="adddata()">Store Image data to sqlite</button>
         <!-- <div class="img_thumbnail">
             <div class="imgclass">
                 <img src="assets/img/2.jpg" style="padding-left:5%;" />
